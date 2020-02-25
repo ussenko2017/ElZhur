@@ -1,0 +1,96 @@
+{% extends "basic.html" %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="static/content/style.css">
+
+
+ <div class="posts-list">
+
+
+
+
+     <table class="myTable">
+			<caption caption-side="top"><strong>Расписание группы - {{ grp }} </strong></caption>
+
+
+			<tr>
+				<th colspan="2">
+					№
+				</th>
+				<th>
+					Предмет
+				</th>
+				<th>
+					<label class="teacher">
+						Преподаватель
+					</label>
+				</th>
+				<th>
+					Кабинет
+				</th>
+			</tr>
+		<!--Понедельник-->
+		 {% for day in range(seven) %}
+		 	{% if day == 0 %}
+		 			<tr class="pn">
+					<td rowspan="7" >Понедельник</td>
+						{% endif %}
+				{% if day == 1 %}
+		 			<tr class="vt">
+					<td rowspan="7" >Вторник</td>
+		 {% endif %}
+				{% if day == 2 %}
+		 			<tr class="sr">
+					<td rowspan="7" >Среда</td>
+		 {% endif %}
+				{% if day == 3 %}
+		 			<tr class="cht">
+					<td rowspan="7" >Четверг</td>
+		 {% endif %}
+				{% if day == 4 %}
+		 			<tr class="pt">
+					<td rowspan="7" >Пятница</td>
+		 {% endif %}
+				{% if day == 5 %}
+		 			<tr class="cht">
+					<td rowspan="7" >Суббота</td>
+		 {% endif %}
+				{% if day == 6 %}
+		 			<tr class="pt">
+					<td rowspan="7" >Воскресенье</td>
+				{% endif %}
+		 {% for para in range(seven) %}
+				<td>{{ para + 1}}</td>
+		{% if arrayToWeek[day][para] == [] %}
+				<td>  </td>
+				<td><label class="teacher">  </label></td>
+				<td>  </td>
+		 	{% else %}
+		 		<td>{{ arrayToWeek[day][para]['predmet_name'] }}</td>
+				<td><label class="teacher">{{ arrayToWeek[day][para]['ln'] + ' ' +   arrayToWeek[day][para]['fn'][0] + '.' + arrayToWeek[day][para]['patr'][0]+ '.'    }}</label></td>
+				<td>{{ arrayToWeek[day][para]['room_name'] }}</td>
+		 	{% endif %}
+
+			</tr>
+		 {% endfor %}
+		 {% endfor %}
+
+
+		</table>
+		<br>
+		<br>
+ <form action="/showraspis" method="post">
+     <p><select  name="group_id">
+
+                             <option selected="selected" disabled>Отображать расписание для выбранной группы</option>
+                                    {% for id,name in distListGroup %}
+                                        <option value="{{ id }}" >{{ name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+	 <br> <br>
+         <input class="button" type ="submit" value="Показать">
+</form>
+     <br>
+     </div>
+{% endblock %}

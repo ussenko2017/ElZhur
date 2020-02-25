@@ -1,0 +1,40 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<br>
+<br>
+<style>
+  #addpost{
+  display:block;
+  }
+</style>
+
+
+  <div class="posts-list">
+
+      {% for dict in news %}
+    <article id="post-1" class="post">
+      <div class="post-image"><a href=""><img src="{{ dict['img'] }}"></a></div>
+      <div class="post-content">
+        <div class="category"><a href="">{{ dict['category'] }}</a></div>
+        <h2 class="post-title">{{ dict['title'] }}</h2>
+        <p>{{ dict['text'] }} </p>
+        <div class="post-footer share">
+          <a class="more-link" href="">Продолжить чтение</a>
+
+          <div class="post-social social">
+            <a class="push facebook" data-id="fb"  target="_blank"><i class="fa fa-facebook"></i></a>
+            <a class="push twitter" data-id="tw" target="_blank"><i class="fa fa-twitter"></i></a>
+            <a   class="push pinterest" data-id="pin" target="_blank"><i class="fa fa-pinterest"></i></a>
+
+        </div></div>
+      </div>
+    </article>
+      {% endfor %}
+
+  </div> <!-- конец div class="posts-list"-->
+
+
+
+{% endblock %}

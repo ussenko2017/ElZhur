@@ -1,0 +1,43 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+
+<div class="posts-list">
+<style>
+    #addpredmet{
+    display:block;
+    }
+</style>
+<h3 class="widget-title">Список предметов</h3>
+    <table style="width:100%" class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>№</b></h4></th>
+            <th><h4><b>Название</b></h4></th>
+            <th><h4><b>Количество часов</b></h4></th>
+            <th><h4><b>Удаление</b></h4></th>
+
+        </tr>
+    </thead>
+        <tbody>
+        {% for predmet in records %}
+
+
+          <tr>
+            <td>{{ predmet.id  }}</td>
+            <td>{{ predmet.name }}</td>
+            <td>{{ predmet.hours }}</td>
+            <td><a href="/del?id={{ predmet.id }}&redirect=predmets&tablename=predmet" style="color:red">Удалить</a></td>
+
+
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+</div>
+{% endblock %}

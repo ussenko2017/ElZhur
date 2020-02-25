@@ -1,0 +1,129 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<br>
+<br>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+.reg input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.reg label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+.reg input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+.reg input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.reg.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin:20px;
+}
+
+.reg.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+#reg.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+#reg.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+</style>
+
+  <div  class="posts-list">
+
+
+    <article style="padding:20px;" id="post-1" class="post">
+
+          <form class="reg" action="/add/post" method="post">
+              <div  class="row">
+      <div class="col-25">
+          <label for="fname">Заголовок</label>
+      </div>
+
+                  <div class="col-75">
+              <input type="text" id="fname" name = "title" value="">
+                  </div>
+              </div>
+              <div  class="row">
+      <div class="col-25">
+          <label for="lname">Категория</label>
+      </div>
+                                    <div class="col-75">
+
+                            <input type="text" id='lname' name = "category" value="">
+                                    </div></div>
+              <div  class="row">
+      <div class="col-25">
+          <label for="pname">Ссылка на изображение</label>
+      </div>                                    <div class="col-75">
+
+                            <input type="text" id="pname" name = "img" value="">
+              </div></div>
+              <div  class="row">
+      <div class="col-25">
+          <label for="bd">Содержание</label>
+      </div> <div class="col-75">
+                  <textarea rows="10" cols="45" id="bd" name = "text" ></textarea>
+              </div></div>
+
+
+
+<br>
+          <input class="button" type ="submit" value="Добавить">
+              <br>
+              <br>
+
+               </form>
+
+
+
+    </article>
+
+
+  </div> <!-- конец div class="posts-list"-->
+
+
+
+{% endblock %}

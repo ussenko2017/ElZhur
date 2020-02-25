@@ -1,0 +1,54 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<style>
+    #aside{
+    padding-left:100px;
+    }
+
+    #addteacher{
+    display:block;
+    }
+
+</style>
+<div class="posts-list">
+
+<h3 class="widget-title">Список преподавателей</h3>
+    <table style="width:60%" class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>№</b></h4></th>
+                        <th><h4><b>Фамилия</b></h4></th>
+
+            <th><h4><b>Имя</b></h4></th>
+            <th><h4><b>Отчество</b></h4></th>
+            <!--<th><h4><b>Эл.Почта</b></h4></th>-->
+           <th><h4><b>Отделение</b></h4></th>
+           <th><h4><b>Удаление</b></h4></th>
+
+        </tr>
+    </thead>
+        <tbody>
+          {% for teacher , userr ,otdel  in que %}
+
+          <tr>
+            <td>{{ teacher.user_id }}</td>
+                          <td>{{ userr.lastname }}</td>
+
+            <td>{{ userr.firstname }}</td>
+            <td>{{ userr.patr }}</td>
+           <!-- <td>{{ userr.email }}</td>-->
+            <td>{{ otdel.name }}</td>
+            <td><a href="/del?id={{ teacher.id }}&redirect=teachers&tablename=teacher" style="color:red">Удалить</a></td>
+
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+        </div>
+{% endblock %}

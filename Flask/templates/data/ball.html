@@ -1,0 +1,47 @@
+{% extends "basic.html" %}
+
+{% block content %}
+<div class="posts-list">
+<style>
+    #addball{
+    display:block;
+    }
+</style>
+<h3 class="widget-title">Список оценок</h3>
+    <table style="width:100%" class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>№</b></h4></th>
+            <th><h4><b>Оценка</b></h4></th>
+            <th><h4><b>Студент</b></h4></th>
+            <th><h4><b>Предмет</b></h4></th>
+            <th><h4><b>Дата</b></h4></th>
+            <th><h4><b>Удаление</b></h4></th>
+        </tr>
+    </thead>
+        <tbody>
+        {% for id, ball, fn, ln, patr, predmet_name, date_add in quer %}
+
+
+
+                <tr>
+                    <td>{{ id }}</td>
+                    <td>{{ ball }}</td>
+                    <td>{{ ln + ' ' + fn[0] + '. ' + patr[0] + '. '  }}</td>
+                    <td>{{ predmet_name }}</td>
+                    <td>{{ date_add[0:-10] }}</td>
+                     <td><a href="/del?id={{ id }}&redirect=balls&tablename=ball" style="color:red">Удалить</a></td>
+
+
+                </tr>
+
+
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+</div>
+
+{% endblock %}

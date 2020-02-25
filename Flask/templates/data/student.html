@@ -1,0 +1,55 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<style>
+    #aside{
+    padding-left:100px;
+    }
+
+    #addstudent{
+    display:block;
+    }
+
+</style>
+<div class="posts-list">
+
+<h3 class="widget-title">Список студентов</h3>
+    <table style="width:60%" class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>№</b></h4></th>
+                        <th><h4><b>Фамилия</b></h4></th>
+
+            <th><h4><b>Имя</b></h4></th>
+            <th><h4><b>Отчество</b></h4></th>
+            <!--<th><h4><b>Эл.Почта</b></h4></th>-->
+            <!--<th><h4><b>Отделение</b></h4></th>-->
+            <th><h4><b>Группа</b></h4></th>
+            <th><h4><b>Специальность</b></h4></th>
+            <th><h4><b>Удаление</b></h4></th>
+        </tr>
+    </thead>
+        <tbody>
+          {% for student,userr, group, special, otdel  in records %}
+
+          <tr>
+            <td>{{ userr.id }}</td>
+            <td>{{ userr.lastname }}</td>
+            <td>{{ userr.firstname }}</td>
+            <td>{{ userr.patr }}</td>
+           <!-- <td>{{ userr.email }}</td>
+            <td>{{ otdel.name }}</td>-->
+            <td>{{ group.name }}</td>
+            <td>{{ special.name }}</td>
+             <td><a href="/del?id={{ student.id }}&redirect=students&tablename=student" style="color:red">Удалить</a></td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+        </div>
+{% endblock %}

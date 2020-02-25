@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <style>
+* {
+    box-sizing: border-box;
+}
+
+.reg input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.reg label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+.reg input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+.reg input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.reg.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin:20px;
+}
+
+.reg.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+#reg.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+#reg.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+</style>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Электронный журнал для колледжа - ElZhur</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic|Playfair+Display:400,700&subset=latin,cyrillic">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="static/content/site.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="static/scripts/share.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+</head>
+<body>
+<header style="position:fixed;">
+    <nav class="container">
+      <a class="logo" href="{{ url_for('home') }}">
+        <span>E</span>
+        <span>L</span>
+        <span>Z</span>
+        <span>H</span>
+        <span>U</span>
+        <span>R</span>
+      </a>
+      <div class="nav-toggle"><span></span></div>
+
+<style>
+#img{
+ width: 70px;
+ height: 70px;
+
+}
+.fixedbut { position: fixed; bottom: 20px; right: 20px; display: block; color: #fff; text-decoration: none; padding: 6px 23px; font-size: 17px;}
+.fixedbut:hover {}
+</style>
+        <div class="fixedbut"><a href="javascript:(print());"><img id="img" src="static/content/print.png" ></a></div>
+
+      <!--<form action="" method="get" id="searchform">
+        <input type="text" placeholder="Искать на сайте...">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>-->
+      <ul id="menu">
+        <li><a style="color:white;" href="{{ url_for('home') }}">Главная</a></li>
+
+
+
+        {% if current_user.is_authenticated %}
+          {% if current_user.access %}
+                              <li><a style="color:white;" style="color:white;" href="{{ url_for('showjournal') }}">Журнал</a></li>
+
+<li class="dropdown">
+    <a style="color:white;" href="javascript:void(0)" class="dropbtn">Расписание</a>
+    <div class="dropdown-content">
+
+                <a href="{{ url_for('showRaspis') }}">Просмотреть</a>
+                <a href="{{ url_for('editRaspis') }}">Изменить</a>
+
+           </div>
+          <li class="dropdown">
+    <a style="color:white;" href="javascript:void(0)" class="dropbtn">Учебная часть</a>
+    <div class="dropdown-content">
+      <a href="{{ url_for('showotdel') }}">Отделения</a>
+        <a href="{{ url_for('showspecial') }}">Специальности</a>
+        <a href="{{ url_for('showgroups') }}">Группы</a>
+      <a href="{{ url_for('showstudent') }}">Студенты</a>
+      <a href="{{ url_for('showpredmet') }}">Предметы</a>
+
+
+
+      <a href="{{ url_for('showteachers') }}">Преподаватели</a>
+      <a href="{{ url_for('showrooms') }}">Кабинеты</a>
+        <a href="{{ url_for('showball') }}">Оценки</a>
+    </div>
+        {% endif %}
+          {% endif %}
+        {% if current_user.access == False %}
+                                        <li><a style="color:white;" style="color:white;" href="{{ url_for('showjournal') }}">Журнал</a></li>
+
+          <li class="dropdown">
+    <a style="color:white;" href="javascript:void(0)" class="dropbtn">Расписание</a>
+    <div class="dropdown-content">
+
+                <a href="{{ url_for('showRaspis') }}">Просмотреть</a>
+
+           </div>
+          <li class="dropdown">
+
+
+          {% endif %}
+      </ul>
+    </nav>
+
+  </header>
+
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% block content %}{% endblock %}
+
+
+<aside  id="aside">
+  <!--
+  <div class="widget">
+    <h3 class="widget-title">Категории</h3>
+    <ul class="widget-category-list">
+      <li><a href="">Дизайн</a> (2)</li>
+      <li><a href="">Вёрстка</a> (5)</li>
+      <li><a href="">Видео</a> (1)</li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h3 class="widget-title">Последние записи</h3>
+    <ul class="widget-posts-list">
+      <li>
+        <div class="post-image-small">
+          <a href=""><img src="https://html5book.ru/wp-content/uploads/2016/05/rasskaz_slovar_rodnoy_prirodi.jpg"></a>
+        </div>
+        <h4 class="widget-post-title">Весна</h4>
+      </li>
+      <li>
+        <div class="post-image-small">
+          <a href=""><img src="https://html5book.ru/wp-content/uploads/2016/05/rasskaz_Russia.jpg"></a>
+        </div>
+        <h4 class="widget-post-title">Лето</h4>
+      </li>
+      <li>
+        <div class="post-image-small">
+          <a href=""><img src="https://html5book.ru/wp-content/uploads/2016/05/rasskaz_rodnaya_priroda_osen.jpg"></a>
+        </div>
+        <h4 class="widget-post-title">Осень</h4>
+      </li>
+    </ul>
+  </div>
+  -->
+ {% if current_user.is_authenticated %}
+    <div  style="position:fixed;">
+    <div  id="left-column1">
+    <div  class="widget">
+    <h3 class="widget-title"><a class="category" href="{{ url_for('profile') }}">Профиль</a></h3>
+      <p class="mes">Привет, {{ current_user.id }}</p>
+      <br>
+      <a class="button"   href="{{ url_for('logout') }}">Выход</a>
+  </div>
+</div>
+{% if current_user.access %}
+        <div  id="addpost"  class="widget reg">
+
+    <h3 class="widget-title">Редактор новостной ленты</h3>
+            <br>
+    <a class="button"   href="/addpost">Добавить новость</a>
+            <br>
+            <br>
+            <br>
+  </div>
+
+        {% endif %}
+    <div  id="addotdel"  class="widget reg">
+
+    <h3 class="widget-title">Отделение</h3>
+    <form action="/add/otdel" method="post">
+      <br>
+         <div  class="row">
+            <div class="col-75">
+
+        <input type="text" name="name" placeholder="Название" required>
+            </div>
+         </div>
+      <br>
+      <br>
+
+
+
+      <input class="button"  type="submit" value="Добавить" >
+        <br>
+        <br>
+        <br>
+    </form>
+  </div>
+
+     <div id="addstudent"  class="widget reg">
+    <h3 class="widget-title">Студент</h3>
+    <form action="/add/student" method="post">
+        <div  class="row">
+            <div class="col-75">
+      <br>
+<p><select  name="group_id">
+
+
+                             <option selected="selected" disabled>Выберите группу</option>
+                                    {% for group in groups %}
+                                        <option value="{{ group.id }}" >{{ group.name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+            </div></div>
+<div  class="row">
+            <div class="col-75">        <p><select  name="user_id">
+
+                             <option selected="selected" disabled>Выберите пользователя</option>
+                                    {% for userr in users %}
+                                        <option value="{{ userr.id }}" >{{ userr.email }}</option>
+                                    {% endfor %}
+
+            </select></p></div></div>
+<div  class="row">
+            <div class="col-75">        <input type="text" name="num_zach" placeholder="Номер зачетки" required>
+            </div></div>
+      <br>
+      <br>
+
+      <input class="button"  type="submit" value="Добавить" >
+        <br><br><br>
+    </form>
+     </div>
+
+        <div id="addpredmet"  class="widget reg">
+    <h3 class="widget-title">Предмет</h3>
+    <form action="/add/predmet" method="post">
+      <br>
+<div  class="row">
+            <div class="col-75">
+        <input type="text" name="name" placeholder="Название" required>
+            </div></div>
+
+        <div  class="row">
+            <div class="col-75">
+
+        <input type="text" name="hours" placeholder="Количество часов" required>
+            </div></div>
+      <br>
+      <br>
+
+
+      <input class="button"  type="submit" value="Добавить" >
+    </form>
+            <br>
+            <br>
+            <br>
+  </div>
+
+
+          <div id="addspecial"  class="widget reg">
+    <h3 class="widget-title">Специальность</h3>
+    <form action="/add/special" method="post">
+      <br>
+        <div  class="row">
+            <div class="col-75">
+<p><select  name="otdel_id" style="width:100%">
+
+                             <option selected="selected" disabled>Выберите отделение</option>
+                                    {% for otdel in otdels %}
+                                        <option value="{{ otdel.id }}" >{{ otdel.name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+            </div></div>
+<div  class="row">
+            <div class="col-75">
+        <input type="text" name="name" placeholder="Название" required>
+            </div></div>
+      <br>
+      <br>
+
+
+      <input class="button"  type="submit" value="Добавить" >
+    </form>
+              <br>
+              <br>
+              <br>
+     </div>
+
+
+        <div id="addgroup"  class="widget reg">
+    <h3 class="widget-title">Группа</h3>
+    <form action="/add/group" method="post">
+      <br>
+<div  class="row">
+            <div class="col-75">
+<p><select  name="special_id" style="width:100%">
+
+                             <option selected="selected" disabled>Выберите специальность</option>
+                                    {% for special in specials %}
+                                        <option value="{{ special.id }}" >{{ special.name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+            </div></div>
+
+<div  class="row">
+            <div class="col-75">
+        <input type="text" name="name" placeholder="Название" required>
+            </div></div>
+        <div  class="row">
+            <div class="col-25">
+                <label for="dbegin">Дата начала обучения</label>
+            </div>
+            <div class="col-75">
+        <input class="reg" id="dbegin" type="date" name="date_begin" placeholder="Дата начала обучения" required>
+            </div></div>
+        <div  class="row">
+            <div class="col-25">
+                <label for="dend">Дата окончания обучения</label>
+            </div>
+            <div class="col-75">
+        <input class="reg" id="dend" type="date" name="date_end" placeholder="Дата окончания обучения" required>
+            </div></div>
+      <br>
+      <br>
+
+      <input class="button"  type="submit" value="Добавить" >
+    </form>
+            <br>
+            <br>
+            <br>
+     </div>
+
+
+
+          <div id="addball"  class="widget reg">
+    <h3 class="widget-title">Оценка</h3>
+    <form action="/add/ball" method="post">
+      <br>
+        <div  class="row">
+            <div class="col-75">
+<p><select  name="student_id" style="width:100%">
+
+                             <option selected="selected" disabled>Выберите студента</option>
+                                    {% for student, userr in students %}
+                                        <option value="{{ student.user_id }}" >{{ userr.firstname + ' ' + userr.lastname + ' ' + userr.patr }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+            </div></div>
+        <div  class="row">
+            <div class="col-75">
+        <p><select  name="predmet_id" style="width:100%">
+
+                             <option selected="selected" disabled>Выберите предмет</option>
+                                    {% for predmet in predmets %}
+                                        <option value="{{ predmet.id }}" >{{ predmet.name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+            </div></div>
+
+<div  class="row">
+            <div class="col-75">
+        <input type="text" name="ball" placeholder="Оценка" required>
+            </div></div>
+      <br>
+      <br>
+
+      <input class="button"  type="submit" value="Добавить" >
+    </form>
+              <br>
+              <br>
+              <br>
+     </div>
+
+<div id="addteacher"  class="widget reg">
+    <h3 class="widget-title">Преподаватель</h3>
+    <form action="/add/teacher" method="post">
+      <br>
+        <div  class="row">
+            <div class="col-75">
+<p><select  name="user_id">
+
+                             <option selected="selected" disabled>Выберите пользователя</option>
+                                    {% for userr in users %}
+                                        <option value="{{ userr.id }}" >{{ userr.email }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+            </div></div>
+<div  class="row">
+            <div class="col-75">
+        <p><select  name="otdel_id" style="width:100%">
+
+                             <option selected="selected" disabled>Выберите отделение</option>
+                                    {% for otdel in otdels %}
+                                        <option value="{{ otdel.id }}" >{{ otdel.name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+
+
+            </div></div>
+        <br><br>
+
+      <input class="button"  type="submit" value="Добавить" >
+    </form>
+    <br>
+    <br>
+    <br>
+     </div>
+
+
+
+        <div id="addrooms"  class="widget reg">
+    <h3 class="widget-title">Кабинет</h3>
+    <form action="/add/rooms" method="post">
+      <br>
+        <div class="row">
+      <div class="col-25">
+        <input type="text" name="name" placeholder="Название" required>
+
+      </div></div>
+<br>
+<br>
+      <input class="button"  type="submit" value="Добавить" >
+    </form>
+            <br>
+            <br>
+            <br>
+
+  </div>
+
+
+
+  </div>
+
+
+{% else %}
+    <div style="position:fixed;" id="left-column2" >
+    <div  class="widget reg">
+    <h3 class="widget-title">Вход</h3>
+    <form action="login" method="post" id="login">
+        <div class="row">
+      <div class="col-25">
+                    <label for="email">Email</label>
+      </div>
+          <div class="col-75">
+
+
+      <input type="email" name="email" id="email" placeholder="Ваш email" required>
+          <br></div></div>
+          <div class="row">
+      <div class="col-25">
+                    <label for="password">Пароль</label>
+      </div>
+              <div class="col-75">
+      <input type="password" name="password" id="password" placeholder="Ваш пароль" required>
+          <br></div></div>
+      <br>
+      <input  class="button" type="submit" value="Войти" >
+    </form>
+        <br>
+        <br>
+        <br>
+  </div>
+
+  <div  class="widget reg">
+    <h3 class="widget-title">Регистрация</h3>
+    <form action="reg" method="post" id="reg">
+        <div class="row">
+      <div class="col-25">
+          <label for="email_reg">Email</label>
+      </div>
+            <div class="col-75">
+      <input type="email" name="email" id="email_reg" placeholder="Ваш email" required>
+      </div></div>
+
+        <div class="row">
+      <div class="col-25">
+          <label for="password_reg">Пароль</label>
+      </div>
+            <div class="col-75">
+      <input type="password" name="password" id="password_reg" placeholder="Ваш пароль" required>
+                <br></div></div>
+        <input type="hidden" name="key" id="key_reg" placeholder="Регистрационный ключ" required>
+
+      <br>
+      <input class="button"  type="submit" value="Зарегистрироваться" >
+        <br>
+        <br>
+        <br>
+    </form>
+  </div>
+        </div>
+{% endif %}
+
+</aside>
+</div> <!-- конец div class="container"-->
+<footer>
+  <div class="container">
+    <div class="footer-col"><span>Мой Дневник © 2019</span></div>
+    <div class="footer-col">
+      <div class="social-bar-wrap">
+        <a title="Facebook" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+        <a title="Twitter" href="" target="_blank"><i class="fa fa-twitter"></i></a>
+        <a title="Pinterest" href="" target="_blank"><i class="fa fa-pinterest"></i></a>
+        <a title="Instagram" href="" target="_blank"><i class="fa fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <a href="mailto:admin@yoursite.ru">Написать письмо</a>
+    </div>
+  </div>
+</footer>
+<script>
+$('.nav-toggle').on('click', function(){
+$('#menu').toggleClass('active');
+});
+</script>
+</body>
+</html>
+</body>
+</html>

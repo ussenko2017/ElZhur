@@ -1,0 +1,44 @@
+{% extends "basic.html" %}
+
+{% block content %}
+<div class="posts-list">
+<style>
+    #addgroup{
+    display:block;
+    }
+</style>
+<h3 class="widget-title">Список групп</h3>
+    <table style="width:100%" class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>№</b></h4></th>
+            <th><h4><b>Название</b></h4></th>
+            <th><h4><b>Специальность</b></h4></th>
+            <th><h4><b>Дата начала обучения</b></h4></th>
+            <th><h4><b>Дата окончания обучения</b></h4></th>
+            <th><h4><b>Удаление</b></h4></th>
+        </tr>
+    </thead>
+        <tbody>
+        {% for groupp, speciall in que %}
+
+                <tr>
+                    <td>{{ groupp.id }}</td>
+                    <td>{{ groupp.name}}</td>
+                    <td>{{ speciall.name }}</td>
+                    <td>{{ groupp.date_begin.strftime("%m/%d/%Y") }}</td>
+                    <td>{{ groupp.date_end.strftime("%m/%d/%Y") }}</td>
+                     <td><a href="/del?id={{ groupp.id }}&redirect=groups&tablename=group" style="color:red">Удалить</a></td>
+
+                </tr>
+
+
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+</div>
+
+{% endblock %}

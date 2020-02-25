@@ -1,0 +1,46 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<style>
+    #aside{
+    padding-left:100px;
+    }
+
+    #addrooms{
+    display:block;
+    }
+
+</style>
+<div class="posts-list">
+
+<h3 class="widget-title">Список кабинетов</h3>
+    <table style="width:100%" class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>№</b></h4></th>
+            <th><h4><b>Кабинет</b></h4></th>
+            <th><h4><b>Удаление</b></h4></th>
+
+
+        </tr>
+    </thead>
+        <tbody>
+          {% for cab  in que %}
+
+          <tr>
+            <td>{{ cab.id }}</td>
+            <td>{{ cab.name }}</td>
+              <td><a href="/del?id={{ cab.id }}&redirect=rooms&tablename=rooms" style="color:red">Удалить</a></td>
+
+
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+        </div>
+{% endblock %}

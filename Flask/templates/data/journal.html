@@ -1,0 +1,48 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<style>
+    #aside{
+display:none;
+    }
+</style>
+<h3 class="widget-title">Полный список оценок</h3>
+{% for predmet in predmets %}
+{% if predmet != 'ids' and predmet != 'ColumnList' %}
+<div style="width:100%" class="jumbotron">
+    <h3 class="button"><b>Предмет: {{ predmets[predmet]['name'] }}</b></h3>
+
+<table style="width:100%; " class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>Студент</b></h4></th>
+            <th><h4><b>Оценка</b></h4></th>
+        </tr>
+    </thead>
+        <tbody>
+        {% for ball in balls %}
+        {% if ball != 'ids' and ball != 'ColumnList' %}
+
+
+        {% if predmet == balls[ball]['predmet_id'] %}
+
+                <tr>
+                    <td>{{  students[balls[ball]['student_id']]['lastname'] + ' ' +
+                        students[balls[ball]['student_id']]['firstname']+ ' ' +
+                        students[balls[ball]['student_id']]['patr'] }}</td>
+                    <td>{{ balls[ball]['ball'] }}</td>
+
+                </tr>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+    </tbody>
+
+</table>
+    </div>
+{% endif %}
+{% endfor %}
+
+{% endblock %}

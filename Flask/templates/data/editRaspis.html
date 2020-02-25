@@ -1,0 +1,257 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<br>
+<br>
+  <link rel="stylesheet" type="text/css" href="static/content/style.css">
+
+
+  <div class="posts-list">
+
+    <article id="post-1" class="post">
+
+        <h3 class="widget-title">Связывание</h3>
+
+        <div class = "post-content">
+<br>
+
+        <p>Для создания расписания необходимо связать между собой "Предмет", "Кабинет" и "Преподаватель"я
+        </p>
+          <form action="/editraspis/add/connectjournal" method="post">
+            <p><select  name="predmet" required style="width:98%">
+                <option selected="selected" disabled>Выберите предмет</option>
+                {% for predmet in predmets %}
+                <option value="{{ predmet.id }}" >{{ predmet.name }}</option>
+                {% endfor %}
+
+            </select></p>
+              <br>
+
+              <p><select  name="room" required style="width:98%">
+                <option selected="selected" disabled>Выберите кабинет</option>
+                {% for room in rooms %}
+                <option value="{{ room.id }}" >{{ room.name }}</option>
+                {% endfor %}
+
+            </select></p>
+<br>
+
+              <p><select  name="teacher" required style="width:98%">
+                <option selected="selected" disabled>Выберите преподавателя</option>
+                {% for teacher,userr in teachers %}
+                <option value="{{ userr.id }}" >{{   userr.lastname + ' ' + userr.firstname + ' ' + userr.patr  }}</option>
+                {% endfor %}
+
+            </select></p>
+<br>
+          <input class="button" type ="submit" value="Связать">
+               </form>
+
+
+</div>
+    </article>
+      <article id="post-2" class="post">
+          <h3 class="widget-title">Расписание на день</h3>
+
+           <div class = "post-content">
+          <p>Для планировка расписания на день нужно выбрать нужную связку "Предмет-Кабинет-Преподаватель" для каждой пары.
+          В случае отсутствия пары оставить поле пустым</p>
+                         <form action="/editraspis/add/journaltoday" method="post">
+
+                <p><select  name="para_1" style="width:98%">
+                <option selected="selected"  disabled>1 пара</option>
+                {% for conJ, teacher, userr,predmet, room in connectJ %}
+                <option value="{{ conJ.id }}" >{{ predmet.name + ' | '+ room.getStr() + ' | '+ userr.lastname + ' ' + userr.firstname + ' ' + userr.patr}}</option>
+                {% endfor %}
+
+            </select></p>
+
+               <p><select  name="para_2" style="width:98%">
+                <option selected="selected" disabled>2 пара</option>
+                {% for conJ, teacher, userr,predmet, room in connectJ %}
+                <option value="{{ conJ.id }}" >{{ predmet.name + ' | '+ room.getStr() + ' | '+ userr.lastname + ' ' + userr.firstname + ' ' + userr.patr}}</option>
+                {% endfor %}
+
+            </select></p>
+
+               <p><select  name="para_3" style="width:98%">
+                <option selected="selected" disabled>3 пара</option>
+                {% for conJ, teacher, userr,predmet, room in connectJ %}
+                <option value="{{ conJ.id }}" >{{ predmet.name + ' | '+ room.getStr() + ' | '+ userr.lastname + ' ' + userr.firstname + ' ' + userr.patr}}</option>
+                {% endfor %}
+
+            </select></p>
+
+               <p><select  name="para_4" style="width:98%">
+                <option selected="selected" disabled>4 пара</option>
+                {% for conJ, teacher, userr,predmet, room in connectJ %}
+                <option value="{{ conJ.id }}" >{{ predmet.name + ' | '+ room.getStr() + ' | '+ userr.lastname + ' ' + userr.firstname + ' ' + userr.patr}}</option>
+                {% endfor %}
+
+            </select></p>
+
+               <p><select  name="para_5" style="width:98%">
+                <option selected="selected" disabled>5 пара</option>
+                {% for conJ, teacher, userr,predmet, room in connectJ %}
+                <option value="{{ conJ.id }}" >{{ predmet.name + ' | '+ room.getStr() + ' | '+ userr.lastname + ' ' + userr.firstname + ' ' + userr.patr}}</option>
+                {% endfor %}
+
+            </select></p>
+
+               <p><select  name="para_6" style="width:98%">
+                <option selected="selected" disabled>6 пара</option>
+                {% for conJ, teacher, userr,predmet, room in connectJ %}
+                <option value="{{ conJ.id }}" >{{ predmet.name + ' | '+ room.getStr() + ' | '+ userr.lastname + ' ' + userr.firstname + ' ' + userr.patr}}</option>
+                {% endfor %}
+
+            </select></p>
+
+               <p><select  name="para_7" style="width:98%">
+                <option selected="selected" disabled>7 пара</option>
+                {% for conJ, teacher, userr,predmet, room in connectJ %}
+                <option value="{{ conJ.id }}" >{{ predmet.name + ' | '+ room.getStr() + ' | '+ userr.lastname + ' ' + userr.firstname + ' ' + userr.patr}}</option>
+                {% endfor %}
+
+            </select></p>
+<input class="button" type ="submit" value="Сохранить">
+               </form>
+
+           </div>
+      </article>
+
+
+
+       <article id="post-3" class="post" >
+          <h3 class="widget-title">Расписание на неделю</h3>
+
+           <div class = "post-content">
+                <p>Для планировка расписания на неделю нужно выбрать расписание(его номер) на день для каждого дня недели и указать группу.
+          В случае отсутствия занятий оставить поле пустым</p>
+                         <form action="/editraspis/add/journaltoweek" method="post">
+
+                                <p><select  name="group_id" required style="width:98%" >
+                                <option selected="selected" disabled>Выберите группу</option>
+                                    {% for item in grp %}
+                                        <option value="{{ item.id }}" >{{ item.name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+                              <p><select  name="day_1" style="width:98%">
+                                <option selected="selected" disabled>Понедельник</option>
+                                    {% for item in jourToDay %}
+                                        <option value="{{ item.id }}" >{{ item.id }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+                                                           <p><select  name="day_2" style="width:98%">
+
+                             <option selected="selected" disabled>Вторник</option>
+                                    {% for item in jourToDay %}
+                                        <option value="{{ item.id }}" >{{ item.id }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+                                                           <p><select  name="day_3" style="width:98%">
+
+                             <option selected="selected" disabled>Среда</option>
+                                    {% for item in jourToDay %}
+                                        <option value="{{ item.id }}" >{{ item.id }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+                                                           <p><select  name="day_4" style="width:98%">
+
+                             <option selected="selected" disabled>Четверг</option>
+                                    {% for item in jourToDay %}
+                                        <option value="{{ item.id }}" >{{ item.id }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+                                                           <p><select  name="day_5" style="width:98%">
+
+                             <option selected="selected" disabled>Пятница</option>
+                                    {% for item in jourToDay %}
+                                        <option value="{{ item.id }}" >{{ item.id }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+                                                           <p><select  name="day_6" style="width:98%">
+
+                             <option selected="selected" disabled>Суббота</option>
+                                    {% for item in jourToDay %}
+                                        <option value="{{ item.id }}" >{{ item.id }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+                                                           <p><select  name="day_7" style="width:98%">
+
+                             <option selected="selected" disabled>Воскресенье</option>
+                                    {% for item in jourToDay %}
+                                        <option value="{{ item.id }}" >{{ item.id }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+
+
+                             <input class="button" type ="submit" value="Сохранить">
+               </form>
+ </div>
+      </article>
+
+
+
+       <article id="post-4" class="post">
+          <h3 class="widget-title">Созданные расписания на день</h3>
+
+
+           <table class="myTable">
+			<caption caption-side="top"><strong></strong></caption>
+
+
+			<tr>
+				<th colspan="2">
+					№
+				</th>
+				<th>
+					Предмет
+				</th>
+				<th>
+					<label class="teacher">
+						Преподаватель
+					</label>
+				</th>
+				<th>
+					Кабинет
+				</th>
+			</tr>
+		 {% for day in allJourToDayList %}
+
+
+                <tr class="pn">
+					<td rowspan="7" >{{ day[0]['id'] }} <a href="/del?id={{ day[0]['id'] }}&redirect=editraspis&tablename=journaltoday" style="color:red;">✖</a> </td>
+
+
+		 {% for para in day %}
+
+				<td>{{ para['num'] + 1 }}</td>
+
+		 		<td>{{ para['predmet_name'] }}</td>
+				<td><label class="teacher">{{ para['fn'] + ' ' +  para['ln'][0] + '.' + para['patr'][0]+ '.'    }}</label></td>
+				<td>{{ para['room_name'] }}</td>
+
+			</tr>
+		 {% endfor %}
+		 {% endfor %}
+
+
+		</table>
+
+           <div class = "post-content">
+</div>
+      </article>
+  </div> <!-- конец div class="posts-list"-->
+
+
+
+{% endblock %}

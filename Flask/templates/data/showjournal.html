@@ -1,0 +1,70 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+
+<div class="posts-list">
+
+<h3 class="widget-title">Журнал оценок</h3>
+    <table style="width:100%" class="table table-condensed" >
+    <thead>
+        <tr>
+            <th><h4><b>ФИО</b></h4></th>
+            <th><h4><b>Оценка</b></h4></th>
+            <th><h4><b>Дата</b></h4></th>
+
+        </tr>
+    </thead>
+        <tbody>
+          {% for  predmet_id, student_id, ball, predmet_name, lastname, firstname, patr,  group_name, group_id, date_add  in quer %}
+
+          <tr>
+            <td>{{ lastname + ' ' + firstname + ' ' + patr }}</td>
+            <td>{{  ball }}</td>
+            <td>{{ date_add }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+
+
+
+
+    </tbody>
+
+</table>
+<br>
+     <form action="{{ url_for('showjournal') }}" method="post" style="width:100%">
+      <br>
+<p><select  name="predmet_id" required style="width:100%">
+
+                             <option selected="selected" disabled>Выберите предмет</option>
+                                    {% for predmet in predmets %}
+                                        <option value="{{ predmet.id }}" >{{ predmet.name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+         <br>
+            <br>
+            <br>
+
+
+        <p><select  name="group_id" required style="width:100%">
+
+                             <option selected="selected" disabled>Выберите группу</option>
+                                    {% for group in groups %}
+                                        <option value="{{ group.id }}" >{{ group.name }}</option>
+                                    {% endfor %}
+
+                                </select></p>
+
+
+      <br>
+      <br>
+
+      <input class="button"  type="submit" value="Показать" >
+    </form>
+    </article>
+        </div>
+{% endblock %}
